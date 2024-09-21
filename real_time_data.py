@@ -1,3 +1,7 @@
+import requests  # For making API requests to DeFi exchanges
+import json      # For handling JSON responses from APIs
+import time      # For timing data fetches, if necessary
+
 from pycoingecko import CoinGeckoAPI
 
 cg = CoinGeckoAPI()
