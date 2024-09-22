@@ -1,27 +1,45 @@
+import requests
+import numpy as np
+
 class VaultBot:
-    def __init__(self, initial_balance=10000, risk_per_trade=0.01):
+    def __init__(self, initial_balance=10000):
         self.balance = initial_balance
-        self.risk_per_trade = risk_per_trade
-        self.portfolio = {}
-        self.max_loss = initial_balance * risk_per_trade
         self.position = None
+        self.trades_executed = 0
+        self.trading_pair = 'bitcoin'
 
-    def calculate_position_size(self, asset, stop_loss):
-        # Calculate how much of the asset to buy based on stop-loss and risk
-        risk_amount = self.balance * self.risk_per_trade
-        position_size = risk_amount / stop_loss
-        return position_size
+    def trade(self, action):
+        current_price = self.get_real_price(self.trading_pair)
+        if current_price is None:
+            print("Error fetching price. Trade aborted.")
+            return
 
-    def set_stop_loss(self, asset, stop_price):
-        # Implement stop-loss logic to limit losses
-        self.portfolio[asset] = {"stop_loss": stop_price}
-
-    def trade(self, asset, price, stop_loss):
-        position_size = self.calculate_position_size(asset, stop_loss)
-        # Implement the logic to buy/sell with risk management
-        if position_size * price <= self.balance:
-            self.balance -= position_size * price
-            self.set_stop_loss(asset, stop_loss)
-            print(f"Bought {position_size} of {asset} at {price} with stop-loss at {stop_loss}")
+        if action == "buy" and self.position is None:
+            self.position = current_price
+            print(f"Real buy of {self.trading_pair} at {current_price} USD")
+        elif action == "sell" and self.position is not None:
+            profit = current_price - self.position
+            print(f"Real sell of {self.trading_pair} at {current_price} USD. Profit: {profit} USD")
+            self.position = None
+            self.trades_executed += 1
         else:
-            print("Insufficient balance.")
+            print("Invalid action or no position to sell.")
+
+    def get_real_price(self, trading_pair):
+
+        # Fetch real-time price using the CoinGecko API
+        url = f"https://api.coingecko.com/api/v3/simple/price?ids={trading_pair}&vs_currencies=usd"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Check for HTTP errors
+            price_data = response.json()
+            return price_data[trading_pair]['usd']
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching real price: {e}")
+            return None
+
+    def execute_trade(self):
+        print("Running VaultBot Real Trading...")
+        self.trade("buy")
+        self.trade("sell")
+        print(f"Trading complete. Total trades: {self.trades_executed}")

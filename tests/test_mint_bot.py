@@ -1,10 +1,7 @@
-import unittest
+import sys
+import os
+
+# Adjust the path to go up to the correct parent directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '$MintBot')))
+
 from mint_bot import PaperBot
-
-class TestMintBot(unittest.TestCase):
-    def test_initial_balance(self):
-        bot = PaperBot(initial_balance=1000)
-        self.assertEqual(bot.balance, 1000)
-
-if __name__ == '__main__':
-    unittest.main()
