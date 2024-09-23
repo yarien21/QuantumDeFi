@@ -1,0 +1,196 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b3d9ff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%; /* Increased width */
+    max-width: 800px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 25px;  /* Adjust font size */
+    text-align: center;
+    margin-bottom: 30px;
+}
+ 
+.logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+.form-section-inline {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-section-inline label {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 150px;
+}
+
+.form-section-inline input[type="text"],
+.form-section-inline input[type="email"],
+.form-section-inline input[type="password"] {
+    width: calc(100% - 160px); /* Space for label */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.try-button, .signup-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.defi-options-box {
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 10px; /* Rounded corners */
+    flex-wrap: wrap;
+}
+
+.defi-options-box label {
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 15px;/* Adjusted margin for better alignment */
+}
+
+.defi-options-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px; /* Larger font for emphasis */
+}
+
+.defi-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.defi-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.defi-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-radio {
+    margin-left: 20px;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Style for the DeFi options box and grid layout */
+.defi-options-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 5px;
+    width: 80%;
+    text-align: center;
+}
+
+.defi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    justify-items: center;
+}
+
+/* Dynamic Arrow Style */
+.captcha-arrow {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.arrow {
+    animation: bounce 1s infinite;
+    color: green;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Style for the form section container */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.captcha-section {
+    text-align: center;
+    padding: 15px;
+    width: 70%;
+    margin: 20px auto;
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 10px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+    .form-container {
+        width: 90%;
+    }
+
+    .defi-options-box {
+        width: 90%;
+    }
+}
