@@ -26,7 +26,6 @@ class VaultBot:
             print("Invalid action or no position to sell.")
 
     def get_real_price(self, trading_pair):
-
         # Fetch real-time price using the CoinGecko API
         url = f"https://api.coingecko.com/api/v3/simple/price?ids={trading_pair}&vs_currencies=usd"
         try:
@@ -38,8 +37,19 @@ class VaultBot:
             print(f"Error fetching real price: {e}")
             return None
 
+    def run_simulation(self):
+        print(f"Simulating trades for {self.trading_pair}...")
+        # Example: Simulate a buy and sell
+        self.trade("buy")
+        self.trade("sell")
+
     def execute_trade(self):
         print("Running VaultBot Real Trading...")
         self.trade("buy")
         self.trade("sell")
         print(f"Trading complete. Total trades: {self.trades_executed}")
+
+# Example usage
+bot = VaultBot()
+bot.run_simulation()  # To simulate trades
+bot.execute_trade()   # To execute real trades
