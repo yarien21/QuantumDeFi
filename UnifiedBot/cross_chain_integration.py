@@ -4,22 +4,16 @@ class APIError(Exception):
     pass
 
 def fetch_token_price(token_address, chain="ethereum"):
-    # Choose API URL based on the chain
-    if chain == "ethereum":
-        api_url = f"https://api.1inch.io/v5.0/1/swap"
-    elif chain == "bsc":
-        api_url = f"https://api.1inch.io/v5.0/56/swap"
-    else:
-        raise ValueError("Unsupported chain")
+    # Choose API URL for Matcha (0x API)
+    api_url = "https://api.0x.org/swap/v1/price"
 
-    # Define query parameters
+    # Define query parameters for Matcha (0x API)
     params = {
-        'fromTokenAddress': token_address,  # The token address (ERC20 for Ethereum, BEP20 for BSC)
-        'toTokenAddress': '0xdAC17F958D2ee523a2206206994597C13D831ec7',  # USDT contract address
-        'amount': 1000000000000000000,  # 1 token in wei (1 ETH in wei)
-        'fromAddress': '0x0000000000000000000000000000000000000000',  # Dummy address, required for API
-        'slippage': 1,  # 1% slippage tolerance
-        'disableEstimate': 'true'  # Disable gas estimation (to get quote faster)
+        'sellToken': token_address,  # The token you're selling (ERC20 for Ethereum)
+        'buyToken': '0xdAC17F958D2ee523a2206206994597C13D831ec7',  # USDT contract address
+        'sellAmount': 1000000000000000000,  # 1 token in wei (1 ETH in wei)
+        'slippagePercentage': 0.01,  # 1% slippage tolerance
+        'network': 1 if chain == "ethereum" else 137  # 1 for Ethereum, 137 for Polygon (Matcha supports Polygon)
     }
 
     try:
@@ -38,7 +32,7 @@ def fetch_token_price(token_address, chain="ethereum"):
 
         # Display the result
         print(f"Parsed Response: {price_data}")
-        return price_data.get('toTokenAmount')
+        return price_data.get('price')
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching price data: {e}")
@@ -47,11 +41,13 @@ def fetch_token_price(token_address, chain="ethereum"):
 
 # Example token addresses
 weth_address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"  # WETH on Ethereum
-wbnb_address = "0xBB4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"  # WBNB on BSC
+matic_address = "0x0000000000000000000000000000000000001010"  # MATIC on Polygon (no WBNB)
 
 # Example usage
 eth_price = fetch_token_price(weth_address, chain="ethereum")
-bnb_price = fetch_token_price(wbnb_address, chain="bsc")
+matic_price = fetch_token_price(matic_address, chain="polygon")
 
 print(f"WETH Price (Ethereum in USDT): {eth_price}")
-print(f"WBNB Price (BSC in USDT): {bnb_price}")
+print(f"MATIC Price (Polygon in USDT): {matic_price}")
+
+#
